@@ -5,8 +5,6 @@ import (
 	"io"
 	"net"
 	"unsafe"
-
-	"github.com/sirupsen/logrus"
 )
 
 type Message struct {
@@ -80,7 +78,7 @@ func (m *Message) Read(c net.Conn) error {
 		if _, err := io.ReadFull(c, data); err != nil {
 			return err
 		}
-		logrus.Infof("Debug ==> data=%v", data)
+		m.Data = data
 	}
 
 	return nil
