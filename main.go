@@ -56,27 +56,3 @@ func main() {
 		logrus.Fatalf("Critical error: %v", err)
 	}
 }
-
-/*
-func main() {
-	if err := os.RemoveAll(SockAddr); err != nil {
-		logrus.Fatal(err)
-	}
-
-	l, err := net.Listen("unix", SockAddr)
-	if err != nil {
-		logrus.WithError(err).Fatal("listen")
-	}
-	defer l.Close()
-
-	logrus.Info("Waiting for connection...")
-	for {
-		conn, err := l.Accept()
-		if err != nil {
-			logrus.WithError(err).Fatal("accept")
-		}
-
-		go handleRequest(conn)
-	}
-}
-*/
