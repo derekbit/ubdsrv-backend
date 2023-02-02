@@ -1,4 +1,4 @@
-module github.com/derekbit/backend-server
+module github.com/derekbit/ubdsrv-backend
 
 go 1.19
 

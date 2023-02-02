@@ -6,7 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 
-	"github.com/derekbit/backend-server/pkg/server"
+	"github.com/derekbit/ubdsrv-backend/pkg/server"
 )
 
 const (
