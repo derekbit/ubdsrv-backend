@@ -6,6 +6,7 @@ import (
 	"net"
 	"os"
 
+	"github.com/ncw/directio"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
@@ -28,7 +29,7 @@ func StartServer(c *cli.Context) error {
 	logrus.Infof("backend-file: %v", backendFile)
 	logrus.Infof("size: %v", size)
 
-	f, err := os.OpenFile(backendFile, os.O_CREATE|os.O_RDWR, os.FileMode(0644))
+	f, err := directio.OpenFile(backendFile, os.O_CREATE|os.O_RDWR, os.FileMode(0644))
 	if err != nil {
 		return errors.Wrapf(err, "failed to create backend file %v", backendFile)
 	}
@@ -54,7 +55,7 @@ func StartServer(c *cli.Context) error {
 		if err != nil {
 			return errors.Wrapf(err, "failed to accept connection")
 		}
-
+		fmt.Println("Accepted connection. Starting handling requests...")
 		go handleRequest(conn, f)
 	}
 }
@@ -90,7 +91,7 @@ func handleRequest(conn net.Conn, f *os.File) {
 
 		switch req.Type {
 		case TypeRead:
-			res.Data = make([]byte, req.Size)
+			res.Data = directio.AlignedBlock(int(req.Size))
 
 			_, err = f.ReadAt(res.Data, res.Offset)
 			if err != nil {

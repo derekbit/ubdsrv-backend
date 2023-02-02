@@ -3,6 +3,7 @@ module github.com/derekbit/ubdsrv-backend
 go 1.19
 
 require (
+	github.com/ncw/directio v1.0.5
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.0
 	github.com/urfave/cli v1.22.12

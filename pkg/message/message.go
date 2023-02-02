@@ -5,6 +5,8 @@ import (
 	"io"
 	"net"
 	"unsafe"
+
+	"github.com/ncw/directio"
 )
 
 type Message struct {
@@ -74,7 +76,7 @@ func (m *Message) Read(c net.Conn) error {
 
 	length := binary.LittleEndian.Uint32(buf[offset:])
 	if length > 0 {
-		data := make([]byte, length)
+		data := directio.AlignedBlock(int(length))
 		if _, err := io.ReadFull(c, data); err != nil {
 			return err
 		}
